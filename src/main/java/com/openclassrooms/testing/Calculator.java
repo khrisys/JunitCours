@@ -9,5 +9,9 @@ public class Calculator {
 	public int multiply(int a, int b) {
 		return a * b;
 	}
+	
+	public void longCalculation() throws InterruptedException {
+		Thread.sleep(2002);
+	}
 
 }
