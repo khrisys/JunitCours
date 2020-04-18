@@ -21,6 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.Mockito.times;
 
+/**
+ * Classe testant que les methodes de CalculatorService repondent bien aux tests, et test de chacune des methodes addition,
+ * sub, multiplication, et division avec assertion grace au fait que les resultats correpodent aux operations effectuées (par
+ * ex 2 + 2 = 4, ou 9 / 3 = 3)
+ */
 @ExtendWith(MockitoExtension.class)
 public class BatchCalculatorServiceTest {
     
