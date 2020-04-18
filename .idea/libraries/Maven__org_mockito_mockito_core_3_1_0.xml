@@ -8,6 +8,8 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/3.1.0/mockito-core-3.1.0-sources.jar!/" />
+      <root url="file://$MAVEN_REPOSITORY$/org/assertj/assertj-core/3.13.2" />
     </SOURCES>
+    <jarDirectory url="file://$MAVEN_REPOSITORY$/org/assertj/assertj-core/3.13.2" recursive="false" type="SOURCES" />
   </library>
 </component>
