@@ -1,18 +1,8 @@
 package com.openclassrooms.testing.calcul.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
+import com.openclassrooms.testing.calcul.domain.Calculator;
+import com.openclassrooms.testing.calcul.domain.model.CalculationModel;
+import com.openclassrooms.testing.calcul.domain.model.CalculationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +10,16 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.openclassrooms.testing.calcul.domain.Calculator;
-import com.openclassrooms.testing.calcul.domain.model.CalculationModel;
-import com.openclassrooms.testing.calcul.domain.model.CalculationType;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BatchCalculatorServiceTest {
