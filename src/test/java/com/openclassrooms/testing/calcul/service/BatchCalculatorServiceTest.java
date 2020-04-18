@@ -23,112 +23,133 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BatchCalculatorServiceTest {
-
-	@Mock
-	CalculatorService calculatorService;
-
-	BatchCalculatorService batchCalculatorService;
-
-	BatchCalculatorService batchCalculatorServiceNoMock;
-
-	@BeforeEach
-	public void init() {
-		batchCalculatorService = new BatchCalculatorServiceImpl(calculatorService);
-
-		batchCalculatorServiceNoMock = new BatchCalculatorServiceImpl(
-				new CalculatorServiceImpl(new Calculator(),
-						new SolutionFormatterImpl()));
-	}
-
-	@Test
-	public void givenOperationsList_whenbatchCalculate_thenReturnsCorrectAnswerList()
-			throws IOException, URISyntaxException {
-		// GIVEN
-		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
-
-		// WHEN
-		final List<CalculationModel> results = batchCalculatorServiceNoMock.batchCalculate(operations);
-
-		// THEN
-		assertThat(results).extracting(CalculationModel::getSolution).containsExactly(4, 1, 48, 3);
-	}
-
-	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceWithCorrectArguments()
-			throws IOException, URISyntaxException {
-		// GIVEN
-		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
-		final ArgumentCaptor<CalculationModel> calculationModelCaptor = ArgumentCaptor.forClass(CalculationModel.class);
-
-		// WHEN
-		batchCalculatorService.batchCalculate(operations);
-
-		// THEN
-		verify(calculatorService, times(4)).calculate(calculationModelCaptor.capture());
-		final List<CalculationModel> calculationModels = calculationModelCaptor.getAllValues();
-		assertThat(calculationModels)
-				.extracting(CalculationModel::getLeftArgument, CalculationModel::getType,
-						CalculationModel::getRightArgument)
-				.containsExactly(
-						tuple(2, CalculationType.ADDITION, 2),
-						tuple(5, CalculationType.SUBTRACTION, 4),
-						tuple(6, CalculationType.MULTIPLICATION, 8),
-						tuple(9, CalculationType.DIVISION, 3));
-	}
-
-	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer()
-			throws IOException, URISyntaxException {
-		// GIVEN
-		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
-		when(calculatorService.calculate(any(CalculationModel.class)))
-				.then(invocation -> {
-					final CalculationModel model = invocation.getArgument(0, CalculationModel.class);
-					switch (model.getType()) {
-					case ADDITION:
-						model.setSolution(4);
-						break;
-					case SUBTRACTION:
-						model.setSolution(1);
-						break;
-					case MULTIPLICATION:
-						model.setSolution(48);
-						break;
-					case DIVISION:
-						model.setSolution(3);
-						break;
-					default:
-					}
-					return model;
-				});
-
-		// WHEN
-		final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
-
-		// THEN
-		verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
-		assertThat(results).extracting("solution").containsExactly(4, 1, 48, 3);
-
-	}
-
-	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer2()
-			throws IOException, URISyntaxException {
-		// GIVEN
-		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
-		when(calculatorService.calculate(any(CalculationModel.class)))
-				.thenReturn(new CalculationModel(CalculationType.ADDITION, 2, 2, 4))
-				.thenReturn(new CalculationModel(CalculationType.SUBTRACTION, 5, 4, 1))
-				.thenReturn(new CalculationModel(CalculationType.MULTIPLICATION, 6, 8, 48))
-				.thenReturn(new CalculationModel(CalculationType.DIVISION, 9, 3, 3));
-
-		// WHEN
-		final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
-
-		// THEN
-		verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
-		assertThat(results).extracting("solution").containsExactly(4, 1, 48, 3);
-
-	}
-
+    
+    @Mock
+    CalculatorService calculatorService;
+    
+    BatchCalculatorService batchCalculatorService;
+    
+    BatchCalculatorService batchCalculatorServiceNoMock;
+    
+    @BeforeEach
+    public void init() {
+        batchCalculatorService = new BatchCalculatorServiceImpl(calculatorService);
+        
+        batchCalculatorServiceNoMock = new BatchCalculatorServiceImpl(new CalculatorServiceImpl(new Calculator(),
+                new SolutionFormatterImpl()));
+    }
+    
+    /**
+     * Utilisez ArgumentCaptor pour capturer les arguments réels avec lesquels votre mock est appelé. Cela vous permet de
+     * vérifier la conformité des appels aux mocks. Et ce, en particulier lorsque votre classe de test utilise des arguments
+     * sur lesquels vous n’avez pas de visibilité directe.
+     *
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @Test
+    public void givenOperationsList_whenbatchCalculate_thenReturnsCorrectAnswerList() throws IOException, URISyntaxException {
+        // GIVEN
+        final Stream<String> operations = Arrays
+                .asList("2 + 2", "5 - 4", "6 x 8", "9 / 3")
+                .stream();
+        
+        // WHEN
+        final List<CalculationModel> results = batchCalculatorServiceNoMock.batchCalculate(operations);
+        
+        // THEN
+        assertThat(results)
+                .extracting(CalculationModel::getSolution)
+                .containsExactly(4, 1, 48, 3);
+    }
+    
+    @Test
+    public void givenOperationsList_whenbatchCalculate_thenCallsServiceWithCorrectArguments() throws IOException,
+            URISyntaxException {
+        // GIVEN
+        final Stream<String> operations = Arrays
+                .asList("2 + 2", "5 - 4", "6 x 8", "9 / 3")
+                .stream();
+        final ArgumentCaptor<CalculationModel> calculationModelCaptor = ArgumentCaptor.forClass(CalculationModel.class);
+        
+        // WHEN
+        batchCalculatorService.batchCalculate(operations);
+        
+        // THEN
+        verify(calculatorService, times(4)).calculate(calculationModelCaptor.capture());
+        final List<CalculationModel> calculationModels = calculationModelCaptor.getAllValues();
+        assertThat(calculationModels)
+                .extracting(CalculationModel::getLeftArgument, CalculationModel::getType, CalculationModel::getRightArgument)
+                .containsExactly(tuple(2, CalculationType.ADDITION, 2), tuple(5, CalculationType.SUBTRACTION, 4), tuple(6,
+                        CalculationType.MULTIPLICATION, 8), tuple(9, CalculationType.DIVISION, 3));
+    }
+    
+    /**
+     * Utilisez les fonctions de réponse sous forme de lambdas ou les réponses multiples avec when(), pour obtenir des
+     * comportements plus sophistiqués de vos mocks.
+     *
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @Test
+    public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer() throws IOException, URISyntaxException {
+        // GIVEN
+        final Stream<String> operations = Arrays
+                .asList("2 + 2", "5 - 4", "6 x 8", "9 / 3")
+                .stream();
+        when(calculatorService.calculate(any(CalculationModel.class))).then(invocation -> {
+            final CalculationModel model = invocation.getArgument(0, CalculationModel.class);
+            switch (model.getType()) {
+                case ADDITION:
+                    model.setSolution(4);
+                    break;
+                case SUBTRACTION:
+                    model.setSolution(1);
+                    break;
+                case MULTIPLICATION:
+                    model.setSolution(48);
+                    break;
+                case DIVISION:
+                    model.setSolution(3);
+                    break;
+                default:
+            }
+            return model;
+        });
+        
+        // WHEN
+        final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
+        
+        // THEN
+        verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
+        assertThat(results)
+                .extracting("solution")
+                .containsExactly(4, 1, 48, 3);
+        
+    }
+    
+    @Test
+    public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer2() throws IOException,
+            URISyntaxException {
+        // GIVEN
+        final Stream<String> operations = Arrays
+                .asList("2 + 2", "5 - 4", "6 x 8", "9 / 3")
+                .stream();
+        when(calculatorService.calculate(any(CalculationModel.class)))
+                .thenReturn(new CalculationModel(CalculationType.ADDITION, 2, 2, 4))
+                .thenReturn(new CalculationModel(CalculationType.SUBTRACTION, 5, 4, 1))
+                .thenReturn(new CalculationModel(CalculationType.MULTIPLICATION, 6, 8, 48))
+                .thenReturn(new CalculationModel(CalculationType.DIVISION, 9, 3, 3));
+        
+        // WHEN
+        final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
+        
+        // THEN
+        verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
+        assertThat(results)
+                .extracting("solution")
+                .containsExactly(4, 1, 48, 3);
+        
+    }
+    
 }
