@@ -26,6 +26,7 @@ public class CalculatorServiceTest {
     @Mock
     SolutionFormatted solutionFormatted;
     
+    // le service qui est testé
     CalculatorService classUnderTest;
     
     // Initialisation de classUnderTest avant chaque methode de test grace à @BeforeEach
