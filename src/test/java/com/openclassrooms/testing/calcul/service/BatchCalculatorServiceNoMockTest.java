@@ -4,7 +4,6 @@ import com.openclassrooms.testing.calcul.domain.Calculator;
 import com.openclassrooms.testing.calcul.domain.model.CalculationModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.io.IOException;
@@ -39,10 +38,6 @@ public class BatchCalculatorServiceNoMockTest {
         final Stream<String> operations = Arrays
                 .asList("2 + 2", "5 - 4", "6 x 8", "9 / " + "3")
                 .stream();
-        
-        // ArgumentCaptor est d'enregistrer les args utilisés lors d'un appel de mock. Ici, on veut capturer les modèles de
-        // calcul utilisés pour appeler le service de calcul.
-        final ArgumentCaptor<CalculationModel> vCalculationModelArgumentCaptor = ArgumentCaptor.forClass(CalculationModel.class);
         
         
         //WHEN
