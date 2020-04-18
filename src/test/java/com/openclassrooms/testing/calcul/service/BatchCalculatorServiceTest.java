@@ -53,16 +53,9 @@ public class BatchCalculatorServiceTest {
         
         
         //WHEN
-        //        final List<CalculationModel> resultsNoMock = batchCalculatorServiceNoMock.batchCalculate(operations);
         final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
         
         //THEN
-/*        assertThat(resultsNoMock).extracting(CalculationModel::getSolution) //extractiong d'assertj transforme la liste de
-                // results en
-                // liste de
-                // solutions, en appelant pour chaque item de la liste, la méthode getSolution()
-                .containsExactly(4, 1, 48, 3);
-        */
         // Lors de l'étape d'assertion, nous allons rapatrier tous les modèles de calcul utilisés. On en profite pour vérifier
         // que la classe  CalculatorService  a bien été utilisée autant de fois que de calculs dans le flux de données
         Mockito
