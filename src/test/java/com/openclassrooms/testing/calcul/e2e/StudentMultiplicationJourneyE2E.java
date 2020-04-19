@@ -19,6 +19,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
+ * Classe de test de bout en bout pour tester la multiplication d'un calculateur
+ *
  * @ExtendWith(SpringExtension.class) permet de simuler une appli bien configurée, comme si on la mettait en prod
  * @SpringBootTest utile pour les tests d'acceptation. Le param ajouté est utile pour dire qu'on lance l'appli comme un
  * environnement de serveur web. Le port reseau est choisi au hasard, ce qui pemet d'eviter tout conflit avec un ou pluseirus
@@ -70,13 +72,11 @@ public class StudentMultiplicationJourneyE2E {
     }
     
     /**
-     * Dans l'etape GIVEN, on demande au navigateur d'aller directement sur l'url de base du calculateur. On recupere alors sur
-     * la page obtenue les elements web obtenus correspondant aux champs saisis des operande et du typoe d'operation + au
-     * bouton submit du form
-     *
      * Etape GIVEN
-     * On recupere ces elements  grace à la methode static de selenium "By.id(...)". Il s'agit des ids Html. Il faut pour que
-     * ca fonctionne aller dans la page de template pour ajouter correctement les ids. (template dans
+     * On demande au navigateur d'aller directement sur l'url de base du calculateur. On recupere alors sur la page obtenue les
+     * elements web obtenus correspondant aux champs saisis des operande et du typoe d'operation + au bouton submit du form.
+     * Ensuite,n recupere ces elements  grace à la methode static de selenium "By.id(...)". Il s'agit des ids Html. Il faut pour
+     * que ca fonctionne aller dans la page de template pour ajouter correctement les ids. (template dans
      * resources/templates/calculator.html
      *
      * Etape WHEN
