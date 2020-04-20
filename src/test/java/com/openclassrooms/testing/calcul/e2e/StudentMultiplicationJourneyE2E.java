@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
- * Classe de test de bout en bout pour tester la multiplication d'un calculateur
+ * Classe de test de bout en bout simulant les action d'un vrai user afin de tester la multiplication d'un calculateur
  *
  * @ExtendWith(SpringExtension.class) permet de simuler une appli bien configurée, comme si on la mettait en prod
  * @SpringBootTest utile pour les tests d'acceptation. Le param ajouté est utile pour dire qu'on lance l'appli comme un
@@ -30,7 +30,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentMultiplicationJourneyE2E {
     
-    // POrt reseau de connexion
+    // Port reseau de connexion
     @LocalServerPort
     private Integer port;
     private WebDriver webDriver = null; // environnement de test basé sur selenium
